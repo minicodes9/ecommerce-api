@@ -1,16 +1,16 @@
-const ProductModel = require('../models/product.model');
+const productModel = require('../models/product.model');
 const mongoose = require('mongoose');
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 // Create a new product
 const createProduct = async (req, res, next) => {
   try {
-    const NewProduct = await ProductModel.create(req.body)
+    const newProduct = await productModel.create(req.body)
    
     return res.status(201).json({
         success: true,
         message: 'Product created successfully',
-        data: NewProduct
+        data: newProduct
     });
   } catch (error) {
     console.error('Error creating product:', error);
@@ -25,7 +25,7 @@ const getProductById = async (req, res, next) => {
     if(!isValidObjectId(id)) {
         return res.status(400).json({ success: false, message: 'Invalid product ID' });
     }
-    const product = await ProductModel.findById(id);
+    const product = await productModel.findById(id);
     if (!product) {
       return res.status(404).json({ success: false, message: `Product with ID ${id} not found` });
     }
@@ -47,7 +47,7 @@ const updateProductById = async (req, res, next) => {
     if(!isValidObjectId(id)) {
         return res.status(400).json({ success: false, message: 'Invalid product ID' });
     }
-    const updatedProduct = await ProductModel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+    const updatedProduct = await productModel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
     if (!updatedProduct) {
       return res.status(404).json({ success: false, message: `Product with ID ${id} not found` });
     }
@@ -69,7 +69,7 @@ const deleteProductById = async (req, res, next) => {
     if(!isValidObjectId(id)) {
         return res.status(400).json({ success: false, message: 'Invalid product ID' });
     }   
-    const deletedProduct = await ProductModel.findByIdAndDelete(id);
+    const deletedProduct = await productModel.findByIdAndDelete(id);
     if (!deletedProduct) {
       return res.status(404).json({ success: false, message: `Product with ID ${id} not found` });
     }
