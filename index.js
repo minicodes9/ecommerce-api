@@ -1,10 +1,15 @@
+
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const ProductRoutes = require('./routes/product.route.js')
 const mongoose = require('mongoose');
 
 const app = express();
+const PORT = process.env.PORT || 5000; 
 
 app.use(express.json());
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Successfully Connected to MongoDB Atlas'))
@@ -14,7 +19,10 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: "Welcome to the E-commerce Catalog API" });
 });
 
-const PORT = process.env.PORT || 5000; 
+app.use(cors('*'));
+app.use('/api', ProductRoutes);
+
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
