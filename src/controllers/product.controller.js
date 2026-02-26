@@ -85,9 +85,70 @@ const deleteProductById = async (req, res, next) => {
     }
 };
 
+// Get all products with pagination, sorting, and name filtering
+const getProducts = async (req, res, next) => {
+    try {
+        let { q, page = 1, limit = 10, sort = 'createdAt', order = 'desc', name } = req.query;
+        page = Number(page);
+        limit = Number(limit);
+
+        // To Check if search query is provided
+        if (!q) {
+        return res.status(400).json({
+            message: "Please provide a search query using 'q' parameter"
+        });
+       }
+        
+        const skip = (page - 1) * limit;
+
+         const Products = await productModel.find(
+            { $text: { $search: q } },
+            { score: { $meta: "textScore" } } // To include relevance score
+        )
+
+        // Build filter
+        const filter = {};
+        if (name) {
+            filter.name = { $regex: name, $options: 'i' }; // Case-insensitive partial match on name
+        }
+
+        // Build sort
+        let sortOption = {};
+        if (sort === 'price') {
+            sortOption.price = order === 'asc' ? 1 : -1;
+        } else {
+            sortOption[sort] = order === 'asc' ? 1 : -1;
+        }
+
+        const products = await productModel.find(filter)
+            .sort(sortOption)
+            .skip(skip)
+            .limit(limit);
+
+        const total = await productModel.countDocuments(filter);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Products retrieved successfully',
+            data: products,
+            pagination: {
+                total,
+                page,
+                limit,
+                pages: Math.ceil(total / limit)
+            }
+        });
+    } catch (error) {
+        console.error('Error retrieving products:', error);
+        next(error);
+    }
+};
+
+
 module.exports = {
     createProduct,
     getProductById,
     updateProductById,
-    deleteProductById
+    deleteProductById,
+    getProducts
 };
