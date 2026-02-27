@@ -93,23 +93,17 @@ const getProducts = async (req, res, next) => {
         limit = Number(limit);
 
         // To Check if search query is provided
-        if (!q) {
-        return res.status(400).json({
-            message: "Please provide a search query using 'q' parameter"
-        });
+       let filter = {};
+
+       if (q) {
+        filter = { $text: { $search: q } };
        }
-        
+
         const skip = (page - 1) * limit;
 
-         const Products = await productModel.find(
-            { $text: { $search: q } },
-            { score: { $meta: "textScore" } } // To include relevance score
-        )
-
         // Build filter
-        const filter = {};
         if (name) {
-            filter.name = { $regex: name, $options: 'i' }; // Case-insensitive partial match on name
+            filter.name = { $regex: name, $options: 'i' };
         }
 
         // Build sort
