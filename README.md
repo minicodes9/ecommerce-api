@@ -28,20 +28,20 @@ This project follows a professional **MVC (Model-View-Controller)** structure.
 
 ## 🔍 Features & API Usage
 ### 1. Basic CRUD Operations
-Create Product (POST): Supports high-fidelity product creation with strict Joi validation.
+•Create Product (POST): Supports high-fidelity product creation with strict Joi validation.
 
-Read One (GET /:id): Fetches detailed data for a specific item.
+•Read One (GET /:id): Fetches detailed data for a specific item.
 
-Update/Delete: Full lifecycle management of inventory.
+•Update/Delete: Full lifecycle management of inventory.
 
 ### 2. Advanced Querying
 Our API implements advanced filtering to enhance user experience:
 
-Text Search: GET /api/products?q=Sony (Searches Name & Description)
+•Text Search: GET /api/products?q=Sony (Searches Name & Description)
 
-Sorting: GET /api/products?sort=price&order=desc (High to Low)
+•Sorting: GET /api/products?sort=price&order=desc (High to Low)
 
-Pagination: GET /api/products?page=1&limit=2
+•Pagination: GET /api/products?page=1&limit=2
 
 Search & Pagination Proof:
 ![Search Results](./screenshots/search_product.png)
@@ -52,9 +52,9 @@ Search & Pagination Proof:
 ---
 
 ## 🛡️ Validation & Error Handling
-Input Validation: Joi middleware ensures name, price, and category meet schema requirements.
+•Input Validation: Joi middleware ensures name, price, and category meet schema requirements.
 
-Error Responses: Returns meaningful JSON error messages and correct HTTP status codes (200, 201, 400, 404, 500).
+•Error Responses: Returns meaningful JSON error messages and correct HTTP status codes (200, 201, 400, 404, 500).
 
 ---
 
