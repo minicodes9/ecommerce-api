@@ -16,7 +16,7 @@ This project follows a professional **MVC (Model-View-Controller)** structure.
 * MongoDB Atlas Cluster
 
 ### Installation
-1. Clone the repo: `git clone <your-repo-link>`
+1. Clone the repo: `git clone <https://github.com/minicodes9/ecommerce-api.git>`
 2. Install dependencies: `npm install`
 3. Configure `.env` file:
    ```env
@@ -44,7 +44,9 @@ Sorting: GET /api/products?sort=price&order=desc (High to Low)
 Pagination: GET /api/products?page=1&limit=2
 
 Search & Pagination Proof:
-![Pagination and Search Results](./assets/pagination-test.png)
+![Search Results](./screenshots/search_product.png)
+
+![Pagination Results](./screenshots/sorted_pagination.png)
 
 
 ---
@@ -57,4 +59,4 @@ Error Responses: Returns meaningful JSON error messages and correct HTTP status 
 ---
 
 ## 👥 The Team
-![HeadShot Flyer of the team](./assets/pagination-test.png)
+![HeadShot Flyer of the team](./screenshots/team_headshot_flier.jpg)
